@@ -1,0 +1,29 @@
+services:
+  database:
+    image: mongo:latest # Use the correct MongoDB image
+    container_name: felix-facts-db
+    restart: always
+    ports:
+      - "27017:27017" # MongoDB default port
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${FELIX_FACTS_DATABASE_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${FELIX_FACTS_DATABASE_PASSWORD}
+      MONGO_INITDB_DATABASE: ${FELIX_FACTS_DATABASE_NAME}
+    volumes:
+      - ./.db-data:/data/db
+  felix-facts-server:
+    build:
+      context: .
+    container_name: felix-facts-server
+    environment:
+      - FELIX_FACTS_DATABASE_HOST=${FELIX_FACTS_DATABASE_HOST}
+      - FELIX_FACTS_DATABASE_PORT=${FELIX_FACTS_DATABASE_PORT}
+      - FELIX_FACTS_DATABASE_NAME=${FELIX_FACTS_DATABASE_NAME}
+      - FELIX_FACTS_DATABASE_USERNAME=${FELIX_FACTS_DATABASE_USERNAME}
+      - FELIX_FACTS_DATABASE_PASSWORD=${FELIX_FACTS_DATABASE_PASSWORD}
+      - FELIX_FACTS_ENVIRONMENT=${FELIX_FACTS_ENVIRONMENT}
+    ports:
+      - "3000:3000"
+    depends_on:
+      - database
+    command: ["npm", "run", "dev"]

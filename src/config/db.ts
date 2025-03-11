@@ -1,18 +1,17 @@
 import { DataSource } from "typeorm";
 import { config } from "dotenv";
 
+import { User } from "../models/User";
+import { Character } from "../models/Character";
+
 config();
 
 export const AppData = new DataSource({
   type: "mongodb",
-  host: process.env.STATS_DATABASE_HOST,
-  port: parseInt(process.env.STATS_DATABASE_PORT || "54321"),
-  username: process.env.STATS_DATABASE_USERNAME,
-  password: process.env.STATS_DATABASE_PASSWORD,
-  database: process.env.STATS_DATABASE_NAME,
+  url: `mongodb://${process.env.FELIX_FACTS_DATABASE_USERNAME}:${process.env.FELIX_FACTS_DATABASE_PASSWORD}@${process.env.FELIX_FACTS_DATABASE_HOST}:${process.env.FELIX_FACTS_DATABASE_PORT}/${process.env.FELIX_FACTS_DATABASE_NAME}?authSource=admin`,
   synchronize: true,
   logging: true,
-  entities: [],
+  entities: [User, Character],
 });
 
 export const connectDB = async () => {
