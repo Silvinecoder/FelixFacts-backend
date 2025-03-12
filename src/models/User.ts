@@ -5,13 +5,9 @@ import {
   UpdateDateColumn,
   ObjectIdColumn,
   BeforeInsert,
-  OneToOne,
-  JoinColumn,
 } from "typeorm";
 import { ObjectId } from "mongodb";
 import { hashMyPassword } from "../middleware/authentication/password";
-
-import { Character } from "./Character";
 
 @Entity({ name: "user" })
 export class User {
@@ -44,10 +40,6 @@ export class User {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @OneToOne(() => Character)
-  @JoinColumn()
-  character: Character;
-
   constructor(
     _id: ObjectId,
     email: string,
@@ -56,8 +48,7 @@ export class User {
     phoneNumber: number,
     gold: number,
     createdAt: Date,
-    updatedAt: Date,
-    character: Character
+    updatedAt: Date
   ) {
     this._id = _id;
     this.email = email;
@@ -67,6 +58,5 @@ export class User {
     this.gold = gold;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
-    this.character = character;
   }
 }

@@ -4,13 +4,21 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ObjectIdColumn,
+  OneToOne,
 } from "typeorm";
 import { ObjectId } from "mongodb";
+import { User } from "./User";
 
 @Entity({ name: "character" })
 export class Character {
   @ObjectIdColumn()
   _id: ObjectId;
+
+  @Column()
+  userId: ObjectId;
+
+  @OneToOne(() => User)
+  user?: User;
 
   @Column()
   name: string;
@@ -41,6 +49,7 @@ export class Character {
 
   constructor(
     _id: ObjectId,
+    userId: ObjectId,
     name: string,
     race: string,
     birthSign: string,
@@ -52,6 +61,7 @@ export class Character {
     updatedAt: Date
   ) {
     this._id = _id;
+    this.userId = userId;
     this.name = name;
     this.race = race;
     this.birthSign = birthSign;

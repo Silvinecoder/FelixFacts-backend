@@ -16,6 +16,22 @@ To get started, install the required dependencies to get the project up and runn
 $ npm install
 ```
 
+### Run server
+
+To run the felix dev server do the following:
+
+```bash
+$ docker compose up -d database
+```
+
+### Run db seed
+
+In order to seed the database we need to run the following:
+
+```bash
+$ npm run seed
+```
+
 ### Run tests
 
 This will run all the unit tests for the project to ensure everything is functioning correctly.

@@ -8,6 +8,7 @@
     "test": "jest",
     "start": "node dist/src/index.js",
     "dev": "ts-node src/index.ts",
+    "seed": "ts-node src/db-seeders/seeders.ts",
     "prestart": "npm run build",
     "lint": "eslint .",
     "format": "prettier --write ."
